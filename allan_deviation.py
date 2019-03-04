@@ -24,7 +24,7 @@ def allan_variance(data, dt, npoints):
     
     for i, b in enumerate(blocksizes):
         data_blocked = data[0:(datapoints // b) * b].reshape((-1, b))
-        xis = np.sum(data_blocked, axis = 1) / tau[i]
+        xis = np.mean(data_blocked, axis = 1)
         allan_var[i, 0] = tau[i]
         allan_var[i, 1] = 0.5 * np.mean(np.diff(xis)**2)
     return allan_var
@@ -53,7 +53,7 @@ if __name__ == "__main__":
             
         matplotlib.rcParams.update({'font.size': 12})
 
-        filtered_data = data[10000:10050, :]
+        filtered_data = data#[10000:10050, :]
 
         dt = np.mean(np.diff(filtered_data[:, 0]))
 
@@ -73,11 +73,15 @@ if __name__ == "__main__":
         plt.tight_layout()
 
         pdf.savefig(fig)
+        plt.show()
         plt.close(fig)
 
         for a, b in enumerate(["X", "Y"]):
             fig2, ax2 = plt.subplots(1, 1)
-            ax2.hist(data[:, a]%1, 500)
+            hist, bins = np.histogram(data[:, a]%1, 500)
+            
+            #ax2.hist(data[:, a]%1, 500)
+            ax2.plot(bins[1:], hist, '.')
 
             ax2.set_xlabel('pixel remainder along ' + b + ' [px]')
             ax2.set_ylabel('Counts')
