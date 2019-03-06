@@ -66,10 +66,10 @@ if __name__ == "__main__":
 
         fig, ax = plt.subplots(1, 1)
 
-        line1, = ax.plot(time, x, "r-")
-        line2, = ax.plot(time, y, "b-")
+        line1, = ax.plot(time, x, "ro-")
+        line2, = ax.plot(time, y, "bo-")
         ax2 = ax.twinx()
-        line3, = ax2.plot(time, temperature, "k-", alpha = 0.4)
+        line3, = ax2.plot(time, temperature, "ko-", alpha = 0.4)
 
         ax.legend((line1, line2, line3), ('X', 'Y', 'Temperature'))
 

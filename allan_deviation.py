@@ -50,7 +50,7 @@ if __name__ == "__main__":
                 data[N_frames * i + j, 2] = dset[j, 4]
             printProgressBar(i, N_points)
         print("")
-            
+
         matplotlib.rcParams.update({'font.size': 12})
 
         filtered_data = data#[10000:10050, :]
@@ -62,8 +62,8 @@ if __name__ == "__main__":
 
         fig, ax = plt.subplots(1, 1)
 
-        line1, = ax.plot(allan_x[:, 0], allan_x[:, 1], "r-")
-        line2, = ax.plot(allan_y[:, 0], allan_y[:, 1], "b-")
+        line1, = ax.loglog(allan_x[:, 0], allan_x[:, 1], "r-")
+        line2, = ax.loglog(allan_y[:, 0], allan_y[:, 1], "b-")
 
         ax.legend((line1, line2), ('X', 'Y'))
 
@@ -79,9 +79,8 @@ if __name__ == "__main__":
         for a, b in enumerate(["X", "Y"]):
             fig2, ax2 = plt.subplots(1, 1)
             hist, bins = np.histogram(data[:, a]%1, 500)
-            
-            #ax2.hist(data[:, a]%1, 500)
-            ax2.plot(bins[1:], hist, '.')
+
+            ax2.plot(bins[1:], hist)
 
             ax2.set_xlabel('pixel remainder along ' + b + ' [px]')
             ax2.set_ylabel('Counts')
