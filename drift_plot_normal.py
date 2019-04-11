@@ -85,4 +85,20 @@ if __name__ == "__main__":
         pdf.savefig(fig)
         plt.close(fig)
 
+        drift_over_one_hour = np.zeros((len(x) - 3273))
+
+        for i in range(len(x) - 3273):
+            drift_over_one_hour[i] = np.linalg.norm(((x[i + 3273] - x[i]), (y[i + 3273] - y[i])))
+        print(drift_over_one_hour)
+        print('Maximum drift over any hour: {} microns'.format(max(drift_over_one_hour)))
+        print('Minimum drift over any hour: {} microns'.format(min(drift_over_one_hour)))
+
+        drift_over_one_day = np.zeros((len(x) - 78545))
+
+        for i in range(len(x) - 78545):
+            drift_over_one_day[i] = np.linalg.norm(((x[i + 78545] - x[i]), (y[i + 78545] - y[i])))
+        print(drift_over_one_day)
+        print('Maximum drift over any 24 hours: {} microns'.format(max(drift_over_one_day)))
+        print('Minimum drift over any 24 hours: {} microns'.format(min(drift_over_one_day)))
+
     df.close()
