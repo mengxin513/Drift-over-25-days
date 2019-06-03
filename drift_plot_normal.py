@@ -50,7 +50,6 @@ if __name__ == "__main__":
         print('')
 
         print('Number of data points: {}'.format(len(data)))
-        print(data)
 
         matplotlib.rcParams.update({'font.size': 12})
 
@@ -89,7 +88,6 @@ if __name__ == "__main__":
 
         for i in range(len(x) - 3273):
             drift_over_one_hour[i] = np.linalg.norm(((x[i + 3273] - x[i]), (y[i + 3273] - y[i])))
-        print(drift_over_one_hour)
         print('Maximum drift over any hour: {} microns'.format(max(drift_over_one_hour)))
         print('Minimum drift over any hour: {} microns'.format(min(drift_over_one_hour)))
 
@@ -97,8 +95,22 @@ if __name__ == "__main__":
 
         for i in range(len(x) - 78545):
             drift_over_one_day[i] = np.linalg.norm(((x[i + 78545] - x[i]), (y[i + 78545] - y[i])))
-        print(drift_over_one_day)
         print('Maximum drift over any 24 hours: {} microns'.format(max(drift_over_one_day)))
         print('Minimum drift over any 24 hours: {} microns'.format(min(drift_over_one_day)))
+
+        fig2, ax2 = plt.subplots(1, 1)
+        hist, bins = np.histogram(np.diff(data[:, 0]), 50)
+
+        ax2.plot(bins[1:], hist)
+
+        ax2.set_xlabel(r' Time between frames [$\mathrm{s}$]')
+        ax2.set_ylabel('Counts')
+
+        plt.tight_layout()
+
+        pdf.savefig(fig2)
+        plt.close(fig2)
+
+        print('Average frame rate: {}'.format(1 / np.mean(np.diff(data[:, 0]))))
 
     df.close()

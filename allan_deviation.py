@@ -34,7 +34,7 @@ if __name__ == "__main__":
         print ('Loading data...') #indication of the programme running
 
         microns_per_pixel = 2.74
-        N_frames = 500
+        N_frames = 1000
         #need to be consistant between drift.py and drift_plot.py
 
         df = h5py.File('drift.hdf5', mode = 'r')
@@ -55,7 +55,6 @@ if __name__ == "__main__":
         filtered_data = data#[10000:10050, :]
 
         print('Number of data points: {}'.format(len(filtered_data)))
-        print(filtered_data)
 
         dt = np.mean(np.diff(filtered_data[:, 0]))
 
@@ -64,8 +63,8 @@ if __name__ == "__main__":
 
         fig, ax = plt.subplots(1, 1)
 
-        line1, = ax.loglog(allan_x[:, 0], allan_x[:, 1], 'ro-')
-        line2, = ax.loglog(allan_y[:, 0], allan_y[:, 1], 'bo-')
+        line1, = ax.loglog(allan_x[:, 0], allan_x[:, 1], 'r.')
+        line2, = ax.loglog(allan_y[:, 0], allan_y[:, 1], 'b.')
 
         ax.legend((line1, line2), ('X', 'Y'))
 
@@ -75,7 +74,6 @@ if __name__ == "__main__":
         plt.tight_layout()
 
         pdf.savefig(fig)
-        plt.show()
         plt.close(fig)
 
         for a, b in enumerate(['X', 'Y']):
